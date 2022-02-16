@@ -390,6 +390,7 @@ class CustomerService extends BaseService {
         metadata,
         billing_address,
         billing_address_id,
+        groups,
         ...rest
       } = update
 
@@ -414,6 +415,10 @@ class CustomerService extends BaseService {
 
       if (password) {
         customer.password_hash = await this.hashPassword_(password)
+      }
+
+      if (groups) {
+        await this.updateCustomerGroups(customer, groups)
       }
 
       const updated = await customerRepository.save(customer)
@@ -463,6 +468,17 @@ class CustomerService extends BaseService {
         customer.billing_address = saved
       }
     }
+  }
+
+  /**
+   * Updates customer groups.
+   *
+   * @param {Customer} customer - the Customer to update
+   * @param {string[]} groups - an array of customer group ids
+   * @return {Promise} the result of the update operation
+   */
+  async updateCustomerGroups(customer, groups) {
+    console.log(groups)
   }
 
   async updateAddress(customerId, addressId, address) {
