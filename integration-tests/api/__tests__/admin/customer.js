@@ -228,5 +228,60 @@ describe("/admin/customers", () => {
         })
       )
     })
+
+    it("Correctly updates customer groups", async () => {
+      const api = useApi()
+      let response = await api
+        .post(
+          "/admin/customers/test-customer-3",
+          {
+            groups: [{ id: "tst-group-id-1", name: "group1" }],
+          },
+          {
+            headers: {
+              Authorization: "Bearer test_token",
+            },
+          }
+        )
+        .catch((err) => {
+          console.log(err)
+        })
+
+      expect(response.status).toEqual(200)
+      expect(response.data.customer).toEqual(
+        expect.objectContaining({
+          groups: [{ id: "tst-group-id-1", name: "group1" }],
+        })
+      )
+
+      // response = await api
+      //   .post(
+      //     "/admin/customers/test-customer-3",
+      //     {
+      //       groups: [
+      //         { id: "tst-group-id-1", name: "group1" },
+      //         { id: "tst-group-id-2", name: "group2" },
+      //       ],
+      //     },
+      //     {
+      //       headers: {
+      //         Authorization: "Bearer test_token",
+      //       },
+      //     }
+      //   )
+      //   .catch((err) => {
+      //     console.log(err)
+      //   })
+
+      // expect(response.status).toEqual(200)
+      // expect(response.data.customer).toEqual(
+      //   expect.objectContaining({
+      //     groups: [
+      //       { id: "tst-group-id-1", name: "group1" },
+      //       { id: "tst-group-id-2", name: "group2" },
+      //     ],
+      //   })
+      // )
+    })
   })
 })

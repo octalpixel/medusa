@@ -38,7 +38,7 @@ import { validator } from "../../../../utils/validator"
  *             type: string
  *             description: The Customer's password.
  *           groups:
- *             type: string[]
+ *             type: object[]
  *             description: List of customer group ids.
  *           metadata:
  *             type: object

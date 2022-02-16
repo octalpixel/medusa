@@ -418,7 +418,7 @@ class CustomerService extends BaseService {
       }
 
       if (groups) {
-        await this.updateCustomerGroups(customer, groups)
+        customer.groups = groups
       }
 
       const updated = await customerRepository.save(customer)
@@ -468,17 +468,6 @@ class CustomerService extends BaseService {
         customer.billing_address = saved
       }
     }
-  }
-
-  /**
-   * Updates customer groups.
-   *
-   * @param {Customer} customer - the Customer to update
-   * @param {string[]} groups - an array of customer group ids
-   * @return {Promise} the result of the update operation
-   */
-  async updateCustomerGroups(customer, groups) {
-    console.log(groups)
   }
 
   async updateAddress(customerId, addressId, address) {
