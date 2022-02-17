@@ -311,8 +311,8 @@ describe("/admin/customers", () => {
           "/admin/customers/test-customer-5",
           {
             groups: [
-              { id: "test-group-5", name: "test-group-5" },
-              { id: "test-group-4", name: "test-group-4" },
+              { id: "test-group-5" },
+              { id: "test-group-4" },
             ],
           },
           {
