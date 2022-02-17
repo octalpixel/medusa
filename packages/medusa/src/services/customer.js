@@ -21,6 +21,7 @@ class CustomerService extends BaseService {
     customerRepository,
     eventBusService,
     addressRepository,
+    customerGroupRepository,
   }) {
     super()
 
@@ -35,6 +36,8 @@ class CustomerService extends BaseService {
 
     /** @private @const {AddressRepository} */
     this.addressRepository_ = addressRepository
+
+    this.customerGroupRepository_ = customerGroupRepository
   }
 
   withTransaction(transactionManager) {
@@ -60,7 +63,9 @@ class CustomerService extends BaseService {
    * @return {string} the validated email
    */
   validateEmail_(email) {
-    const schema = Validator.string().email().required()
+    const schema = Validator.string()
+      .email()
+      .required()
     const { value, error } = schema.validate(email)
     if (error) {
       throw new MedusaError(
@@ -418,9 +423,13 @@ class CustomerService extends BaseService {
       }
 
       if (groups) {
-        customer.groups = groups
+        const cgRepo = manager.getCustomRepository(
+          this.customerGroupRepository_
+        )
+        await this.updateCustomerGroups(customer, groups, cgRepo)
       }
 
+      // throw new Error(JSON.stringify(customer))
       const updated = await customerRepository.save(customer)
 
       await this.eventBus_
@@ -428,6 +437,20 @@ class CustomerService extends BaseService {
         .emit(CustomerService.Events.UPDATED, updated)
       return updated
     })
+  }
+
+  /**
+   * Updates customer groups.
+   *
+   * @param {Customer} customer - the Customer to update
+   * @param {string[]} groups - an array of customer group ids
+   * @param {CustomerGroupRepository} cgRepo - an array of customer group ids
+   * @return {Promise} the result of the update operation
+   */
+  async updateCustomerGroups(customer, groups, cgRepo) {
+    customer.groups = await Promise.all(
+      groups.map(async (g) => await cgRepo.findOne(g.id))
+    )
   }
 
   /**

@@ -235,7 +235,7 @@ describe("/admin/customers", () => {
         .post(
           "/admin/customers/test-customer-3",
           {
-            groups: [{ id: "tst-group-id-1", name: "group1" }],
+            groups: [{ id: "test-group-4", name: "test-group" }],
           },
           {
             headers: {
@@ -250,7 +250,7 @@ describe("/admin/customers", () => {
       expect(response.status).toEqual(200)
       expect(response.data.customer).toEqual(
         expect.objectContaining({
-          groups: [{ id: "tst-group-id-1", name: "group1" }],
+          groups: [{ id: "test-group-4", name: "test-group" }],
         })
       )
 
