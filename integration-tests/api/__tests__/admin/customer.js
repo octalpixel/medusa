@@ -310,10 +310,7 @@ describe("/admin/customers", () => {
         .post(
           "/admin/customers/test-customer-5",
           {
-            groups: [
-              { id: "test-group-5" },
-              { id: "test-group-4" },
-            ],
+            groups: [{ id: "test-group-5" }, { id: "test-group-4" }],
           },
           {
             headers: {

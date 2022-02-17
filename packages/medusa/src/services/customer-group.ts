@@ -59,6 +59,10 @@ class CustomerGroupService extends BaseService {
       }
     })
   }
+
+  retrieveByIds(groups: DeepPartial<CustomerGroup>[]) {
+    throw new Error("TODO: implement me!")
+  }
 }
 
 export default CustomerGroupService
