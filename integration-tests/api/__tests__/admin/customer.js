@@ -248,10 +248,10 @@ describe("/admin/customers", () => {
         })
 
       expect(response.status).toEqual(200)
-      expect(response.data.customer).toEqual(
-        expect.objectContaining({
-          groups: [{ id: "test-group-4", name: "test-group" }],
-        })
+      expect(response.data.customer.groups).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({ id: "test-group-4", name: "test-group" }),
+        ])
       )
 
       // response = await api
