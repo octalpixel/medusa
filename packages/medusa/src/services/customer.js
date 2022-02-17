@@ -429,7 +429,6 @@ class CustomerService extends BaseService {
         await this.updateCustomerGroups(customer, groups, cgRepo)
       }
 
-      // throw new Error(JSON.stringify(customer))
       const updated = await customerRepository.save(customer)
 
       await this.eventBus_
